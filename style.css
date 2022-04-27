@@ -1,0 +1,21 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .gameBoard {
+   display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows:  100px 100px 100px;
+  /*   border: solid 1px black; */
+  }
+  
+  .tttCell {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    background-color: pink;
+    border: solid 1px black;
+    font-size: 50px;
+  }
