@@ -19,8 +19,7 @@ const game = (() => {
            //should this be in another object, more about the game logic?
         //return declareWinner(activePlayer)
         return 'winner!';
-      }
-      if (!board.includes(null)) {
+      } else if (!board.includes(null)) {
         return 'tie game';
       }
     }
@@ -32,11 +31,24 @@ const game = (() => {
   })();
 
   const gameBoard = (() => {
-    const cell = document.querySelectorAll('.tttCell');
-    console.log(cell[1].textContent);
-
+    const cells = Array.from(document.querySelectorAll('.tttCell'));
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].addEventListener('click', event => {
+        cells[i].id = i;
+        addChoice(cells[i]);
+      });
+    }
+    const addChoice = cell => {
+      cell.textContent = 'x';
+      cell.style.color = 'blue';
+      game.board[cell.id] = 'x';
+      console.log(game.board);
+      console.log(game.endGame());
+    }
   })();
   
+
+  // playerfactory should tell me who the current player is
   // each player is x or o. 'game' can decide "whose turn is it?"
   //module returns the functions we want publicly available(like add, sub)
   
@@ -49,8 +61,8 @@ const game = (() => {
   // gameBoard.playerChoice('o', 7);
   // gameBoard.playerChoice('o', 6);
   // gameBoard.playerChoice('x', 8);
-  console.log(gameBoard.board);
-  console.log(gameBoard.endGame());
+  // console.log(gameBoard.board);
+  // console.log(gameBoard.endGame());
   
   // create player objects, first create generic factory functions
   // displayController module which accesses gameboard and checks array and displays changes, look into video where he had his personChange function
