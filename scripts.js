@@ -46,7 +46,24 @@ const game = (() => {
       console.log(game.endGame());
     }
   })();
+
+  const Player = (name) => {
+    const sayHi = () => console.log(`I am player ${name}`);
+    const x = document.querySelector('.playerSelectionX');
+    const o = document.querySelector('.playerSelectionO');
+    let turnOrder = '';
+    const setTurnOrder = () => {
+      x.addEventListener('click', event => {
+        turnOrder = 'first';
+        console.log('this is an event');
+      })();
+    }
+    return { name, sayHi, turnOrder, setTurnOrder };
+  }
   
+  const playerX = Player('x');
+  const playerO = Player('o');
+ // console.log(playerX.set());
 
   // playerfactory should tell me who the current player is
   // each player is x or o. 'game' can decide "whose turn is it?"
