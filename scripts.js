@@ -12,10 +12,7 @@ const game = (() => {
   let winner;
   const playTurn = function () {
     if (gameOver === false) {
-      if (turnCount >= 8) {
-        console.log("tie game");
-        gameOver = true;
-      } else if (
+      if (
         (board[0] === board[1] &&
           board[0] === board[2] &&
           board[1] === board[2] &&
@@ -51,6 +48,9 @@ const game = (() => {
       ) {
         console.log(`Player ${currentPlayer.name} is the winner!`);
         winner = currentPlayer.name;
+        gameOver = true;
+      } else if (turnCount >= 8) {
+        console.log("tie game");
         gameOver = true;
       }
       turnCount++;
