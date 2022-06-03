@@ -1,21 +1,58 @@
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .gameBoard {
-   display: grid;
-    grid-template-columns: 100px 100px 100px;
-    grid-template-rows:  100px 100px 100px;
-  /*   border: solid 1px black; */
-  }
-  
-  .tttCell {
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    background-color: pink;
-    border: solid 1px black;
-    font-size: 50px;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  font-family: "Montserrat", sans-serif;
+}
+
+p {
+  margin: 0;
+  padding: 10px 0px 10px 0px;
+  text-align: center;
+}
+
+.gameBoard {
+  display: grid;
+  grid-template-columns: 100px 100px 100px;
+  grid-template-rows: 100px 100px 100px;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.tttCell {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  background-color: rgb(212, 212, 212);
+  color: rgb(0, 0, 0);
+  border: solid 1px rgb(0, 0, 0);
+  font-size: 50px;
+  font-weight: 500;
+}
+
+.start-button {
+  border-radius: 2px;
+  border: solid 1px black;
+  background-color: rgb(212, 212, 212);
+  padding: 5px;
+}
+
+.players {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 50px;
+  padding: 20px;
+
+}
+
+.playerContainer {
+  display: grid;
+  grid-template-rows: auto auto;
+  align-content: center;
+}
+
+input{
+  text-align:center;
+}

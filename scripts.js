@@ -5,7 +5,6 @@ let playerX = Player("X");
 let playerO = Player("O");
 
 const game = (() => {
-  const board = [null, null, null, null, null, null, null, null, null];
   let currentPlayer = playerX;
   let turnCount = 0;
   let gameOver = false;
@@ -13,38 +12,38 @@ const game = (() => {
   const playTurn = function () {
     if (gameOver === false) {
       if (
-        (board[0] === board[1] &&
-          board[0] === board[2] &&
-          board[1] === board[2] &&
-          board[0] !== null) ||
-        (board[3] === board[4] &&
-          board[3] === board[5] &&
-          board[4] === board[5] &&
-          board[3] !== null) ||
-        (board[6] === board[7] &&
-          board[6] === board[8] &&
-          board[7] === board[8] &&
-          board[6] !== null) ||
-        (board[0] === board[3] &&
-          board[0] === board[6] &&
-          board[3] === board[6] &&
-          board[0] !== null) ||
-        (board[1] === board[4] &&
-          board[1] === board[7] &&
-          board[4] === board[7] &&
-          board[1] !== null) ||
-        (board[2] === board[5] &&
-          board[2] === board[8] &&
-          board[5] === board[8] &&
-          board[2] !== null) ||
-        (board[0] === board[4] &&
-          board[0] === board[8] &&
-          board[4] === board[8] &&
-          board[0] !== null) ||
-        (board[2] === board[4] &&
-          board[2] === board[6] &&
-          board[4] === board[6] &&
-          board[2] !== null)
+        (gameBoard.board[0] === gameBoard.board[1] &&
+          gameBoard.board[0] === gameBoard.board[2] &&
+          gameBoard.board[1] === gameBoard.board[2] &&
+          gameBoard.board[0] !== null) ||
+        (gameBoard.board[3] === gameBoard.board[4] &&
+          gameBoard.board[3] === gameBoard.board[5] &&
+          gameBoard.board[4] === gameBoard.board[5] &&
+          gameBoard.board[3] !== null) ||
+        (gameBoard.board[6] === gameBoard.board[7] &&
+          gameBoard.board[6] === gameBoard.board[8] &&
+          gameBoard.board[7] === gameBoard.board[8] &&
+          gameBoard.board[6] !== null) ||
+        (gameBoard.board[0] === gameBoard.board[3] &&
+          gameBoard.board[0] === gameBoard.board[6] &&
+          gameBoard.board[3] === gameBoard.board[6] &&
+          gameBoard.board[0] !== null) ||
+        (gameBoard.board[1] === gameBoard.board[4] &&
+          gameBoard.board[1] === gameBoard.board[7] &&
+          gameBoard.board[4] === gameBoard.board[7] &&
+          gameBoard.board[1] !== null) ||
+        (gameBoard.board[2] === gameBoard.board[5] &&
+          gameBoard.board[2] === gameBoard.board[8] &&
+          gameBoard.board[5] === gameBoard.board[8] &&
+          gameBoard.board[2] !== null) ||
+        (gameBoard.board[0] === gameBoard.board[4] &&
+          gameBoard.board[0] === gameBoard.board[8] &&
+          gameBoard.board[4] === gameBoard.board[8] &&
+          gameBoard.board[0] !== null) ||
+        (gameBoard.board[2] === gameBoard.board[4] &&
+          gameBoard.board[2] === gameBoard.board[6] &&
+          gameBoard.board[4] === gameBoard.board[6] &&
+          gameBoard.board[2] !== null)
       ) {
         console.log(`Player ${currentPlayer.name} is the winner!`);
         winner = currentPlayer.name;
@@ -57,7 +56,6 @@ const game = (() => {
     }
   };
   return {
-    board,
     playTurn,
     currentPlayer,
     turnCount,
@@ -66,6 +64,7 @@ const game = (() => {
 })();
 
 const gameBoard = (() => {
+  const board = [null, null, null, null, null, null, null, null, null];
   const cells = Array.from(document.querySelectorAll(".tttCell"));
   for (let i = 0; i < cells.length; i++) {
     cells[i].addEventListener("click", (event) => {
@@ -75,9 +74,9 @@ const gameBoard = (() => {
   }
   const addChoice = (cell) => {
     if (game.gameOver === false) {
-      if (game.board[cell.id] === null) {
+      if (board[cell.id] === null) {
         cell.textContent = game.currentPlayer.name;
-        game.board[cell.id] = game.currentPlayer.name;
+        board[cell.id] = game.currentPlayer.name;
         if (game.currentPlayer === playerX) {
           game.currentPlayer = playerO;
         } else {
@@ -87,7 +86,12 @@ const gameBoard = (() => {
       }
     }
   };
+  return {
+    board
+  };
 })();
+
+//player name input, button to start, restart the game, and a display element to declare winner
 
 // const Player = (name) => {
 //     const sayHi = () => console.log(`I am player ${name}`);
