@@ -33,9 +33,9 @@ p {
 }
 
 .start-button {
-  border-radius: 2px;
+  /* border-radius: 2px;
   border: solid 1px black;
-  background-color: rgb(212, 212, 212);
+  background-color: rgb(212, 212, 212); */
   padding: 5px;
 }
 
@@ -44,7 +44,6 @@ p {
   grid-template-columns: auto auto;
   gap: 50px;
   padding: 20px;
-
 }
 
 .playerContainer {
@@ -53,6 +52,13 @@ p {
   align-content: center;
 }
 
-input{
-  text-align:center;
+input {
+  text-align: center;
+}
+
+.playerDisplay {
+  font-size: 25px;
+  background-color: rgb(212, 212, 212);
+  padding: 10px;
+  border-radius: 2px;
 }
