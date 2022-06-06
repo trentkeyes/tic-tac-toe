@@ -1,4 +1,5 @@
 const Player = (name) => {
+  
   return { name };
 };
 let playerX = Player("X");
@@ -90,19 +91,25 @@ const gameBoard = (() => {
     }
   };
 })();
-let playerNames = ["Player 1", "Player2"];
-const nameInput = document.querySelector(".playerInput1");
-nameInput.addEventListener("keypress", (e) => {
+
+let playerNames = ["Player 1", "Player 2"];
+const nameInputEvent = (e) => {
   if (e.key === "Enter") {
-    playerNames[0] = nameInput.value;
-    const playerContainer1 = document.querySelector(".playerContainer1");
+    e.target.id === "playerInput1"
+      ? (playerNames[0] = e.target.value)
+      : (playerNames[1] = e.target.value);
     const playerDisplay = document.createElement("p");
-    playerDisplay.textContent = nameInput.value;
+    playerDisplay.textContent = e.target.value;
     playerDisplay.setAttribute("class", "playerDisplay");
-    playerContainer1.removeChild(nameInput);
-    playerContainer1.appendChild(playerDisplay);
+    const parent = e.target.closest(".playerContainer");
+    parent.removeChild(e.target);
+    parent.appendChild(playerDisplay);
   }
-});
+};
+const nameInput1 = document.querySelector(".playerInput1");
+nameInput1.addEventListener("keypress", nameInputEvent);
+const nameInput2 = document.querySelector(".playerInput2");
+nameInput2.addEventListener("keypress", nameInputEvent);
 
 // const Player = (name) => {
 //     const sayHi = () => console.log(`I am player ${name}`);
