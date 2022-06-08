@@ -1,32 +1,29 @@
-const player = ((name) => {
-  let playerNames = ["Player 1", "Player 2"];
-  let myName = name;
+const Player = (name) => {
   const getName = () => name;
   const nameInputEvent = (e) => {
     if (e.key === "Enter") {
-      e.target.id === "playerInput1"
-        ? (playerNames[0] = e.target.value)
-        : (playerNames[1] = e.target.value);
+      const input = e.target.value;
+      name = input;
       const playerDisplay = document.createElement("p");
-      playerDisplay.textContent = e.target.value;
+      playerDisplay.textContent = input;
       playerDisplay.setAttribute("class", "playerDisplay");
       const parent = e.target.closest(".playerContainer");
       parent.removeChild(e.target);
       parent.appendChild(playerDisplay);
     }
   };
+  //maybe add each of these to the individual player to stop the event from running twice
   const nameInput1 = document.querySelector(".playerInput1");
   nameInput1.addEventListener("keypress", nameInputEvent);
   const nameInput2 = document.querySelector(".playerInput2");
   nameInput2.addEventListener("keypress", nameInputEvent);
-  console.log(name);
   return {
-    nameInputEvent,
-    playerNames,
+    getName,
   };
-})();
-console.log(player.playerNames[0]);
-let player1;
+};
+
+let player1 = Player("Player1");
+let player2 = Player("Player2");
 let playerX;
 // let playerX = player("X");
 // let playerO = player("O");
