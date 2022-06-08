@@ -1,9 +1,35 @@
-const Player = (name) => {
-  
-  return { name };
-};
-let playerX = Player("X");
-let playerO = Player("O");
+const player = ((name) => {
+  let playerNames = ["Player 1", "Player 2"];
+  let myName = name;
+  const getName = () => name;
+  const nameInputEvent = (e) => {
+    if (e.key === "Enter") {
+      e.target.id === "playerInput1"
+        ? (playerNames[0] = e.target.value)
+        : (playerNames[1] = e.target.value);
+      const playerDisplay = document.createElement("p");
+      playerDisplay.textContent = e.target.value;
+      playerDisplay.setAttribute("class", "playerDisplay");
+      const parent = e.target.closest(".playerContainer");
+      parent.removeChild(e.target);
+      parent.appendChild(playerDisplay);
+    }
+  };
+  const nameInput1 = document.querySelector(".playerInput1");
+  nameInput1.addEventListener("keypress", nameInputEvent);
+  const nameInput2 = document.querySelector(".playerInput2");
+  nameInput2.addEventListener("keypress", nameInputEvent);
+  console.log(name);
+  return {
+    nameInputEvent,
+    playerNames,
+  };
+})();
+console.log(player.playerNames[0]);
+let player1;
+let playerX;
+// let playerX = player("X");
+// let playerO = player("O");
 
 const game = (() => {
   const board = [null, null, null, null, null, null, null, null, null];
@@ -91,25 +117,6 @@ const gameBoard = (() => {
     }
   };
 })();
-
-let playerNames = ["Player 1", "Player 2"];
-const nameInputEvent = (e) => {
-  if (e.key === "Enter") {
-    e.target.id === "playerInput1"
-      ? (playerNames[0] = e.target.value)
-      : (playerNames[1] = e.target.value);
-    const playerDisplay = document.createElement("p");
-    playerDisplay.textContent = e.target.value;
-    playerDisplay.setAttribute("class", "playerDisplay");
-    const parent = e.target.closest(".playerContainer");
-    parent.removeChild(e.target);
-    parent.appendChild(playerDisplay);
-  }
-};
-const nameInput1 = document.querySelector(".playerInput1");
-nameInput1.addEventListener("keypress", nameInputEvent);
-const nameInput2 = document.querySelector(".playerInput2");
-nameInput2.addEventListener("keypress", nameInputEvent);
 
 // const Player = (name) => {
 //     const sayHi = () => console.log(`I am player ${name}`);
