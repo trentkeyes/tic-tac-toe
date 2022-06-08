@@ -1,4 +1,5 @@
 const Player = (name) => {
+  let marker = "";
   const getName = () => name;
   const nameInputEvent = (e) => {
     if (e.key === "Enter") {
@@ -19,23 +20,27 @@ const Player = (name) => {
   nameInput2.addEventListener("keypress", nameInputEvent);
   return {
     getName,
+    marker,
   };
 };
 
 let player1 = Player("Player1");
+player1.marker = "X";
 let player2 = Player("Player2");
+player2.marker = "O";
 let playerX;
 // let playerX = player("X");
 // let playerO = player("O");
 
 const game = (() => {
   const board = [null, null, null, null, null, null, null, null, null];
-  let currentPlayer = playerX;
+  let currentPlayer = player1;
   let turnCount = 0;
   let gameOver = false;
   let winner;
   const playTurn = function () {
     if (gameOver === false) {
+      console.log(board);
       if (turnCount >= 8) {
         console.log("tie game");
         console.log(turnCount);
@@ -101,15 +106,12 @@ const gameBoard = (() => {
   const addChoice = (cell) => {
     if (game.gameOver === false) {
       if (game.board[cell.id] === null) {
-        cell.textContent = game.currentPlayer.name;
-        game.board[cell.id] = game.currentPlayer.name;
-        if (game.currentPlayer === playerX) {
-          game.currentPlayer = playerO;
-        } else {
-          game.currentPlayer = playerX;
-        }
+        cell.textContent = game.currentPlayer.marker;
+        game.board[cell.id] = game.currentPlayer.marker;
+        game.currentPlayer === player1
+          ? (game.currentPlayer = player2)
+          : (game.currentPlayer = player1);
         game.playTurn();
-        console.log(game.turnCount);
       }
     }
   };
