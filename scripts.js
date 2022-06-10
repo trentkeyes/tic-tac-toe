@@ -1,5 +1,5 @@
-const Player = (name) => {
-  let marker = "";
+const Player = (name, marker) => {
+  const getMarker = () => marker;
   const getName = () => name;
   const nameInputEvent = (e) => {
     if (e.key === "Enter") {
@@ -13,34 +13,46 @@ const Player = (name) => {
       parent.appendChild(playerDisplay);
     }
   };
-  //maybe add each of these to the individual player to stop the event from running twice
-  const nameInput1 = document.querySelector(".playerInput1");
-  nameInput1.addEventListener("keypress", nameInputEvent);
-  const nameInput2 = document.querySelector(".playerInput2");
-  nameInput2.addEventListener("keypress", nameInputEvent);
+  if (marker === "X") {
+    const nameInput1 = document.querySelector(".playerInput1");
+    nameInput1.addEventListener("keypress", nameInputEvent);
+  } else if (marker === "O") {
+    const nameInput2 = document.querySelector(".playerInput2");
+    nameInput2.addEventListener("keypress", nameInputEvent);
+  }
   return {
     getName,
-    marker,
+    getMarker,
   };
 };
 
-let player1 = Player("Player 1");
-player1.marker = "X";
-let player2 = Player("Player 2");
-player2.marker = "O";
-let playerX;
+let player1 = Player("Player 1", "X");
+let player2 = Player("Player 2", "O");
 
 const game = (() => {
   let board = [null, null, null, null, null, null, null, null, null];
+  const changeBoard = (index) => {
+    if (board[index] === null && gameOver === false) {
+      board[index] = currentPlayer.getMarker();
+      playTurn();
+      switchPlayer();
+      console.log(currentPlayer.getName());
+      console.log(board);
+    }
+  };
   let currentPlayer = player1;
-  const getCurrentPlayer = () => console.log(currentPlayer);
+  const switchPlayer = () => {
+    currentPlayer === player1
+      ? (currentPlayer = player2)
+      : (currentPlayer = player1);
+  };
+  const getCurrentPlayer = () => currentPlayer.getMarker();
   let turnCount = 0;
   let gameOver = true;
   const getGameOver = () => gameOver;
   let winner;
   const playTurn = function () {
     if (gameOver === false) {
-      console.log(board);
       if (turnCount >= 8) {
         console.log("tie game");
         gameOver = true;
@@ -88,22 +100,18 @@ const game = (() => {
   const resetGame = () => {
     gameOver = false;
     board = [null, null, null, null, null, null, null, null, null];
-    gameBoard.cells.array.forEach((element) => {
-      element.textContent = "";
-    });
+    display.clearBoard();
     console.log("reset");
   };
   return {
-    playTurn,
     getGameOver,
-    currentPlayer,
     getCurrentPlayer,
     resetGame,
-    board,
+    changeBoard,
   };
 })();
 
-const gameBoard = (() => {
+const display = (() => {
   const cells = Array.from(document.querySelectorAll(".tttCell"));
   for (let i = 0; i < cells.length; i++) {
     cells[i].addEventListener("click", (event) => {
@@ -113,24 +121,20 @@ const gameBoard = (() => {
   }
   const addChoice = (cell) => {
     if (game.getGameOver() === false) {
-      if (game.board[cell.id] === null) {
-        cell.textContent = game.currentPlayer.marker;
-        game.board[cell.id] = game.currentPlayer.marker;
-        game.currentPlayer === player1
-          ? (game.currentPlayer = player2)
-          : (game.currentPlayer = player1);
-        game.playTurn();
-        game.getCurrentPlayer();
-      }
+      cell.textContent = game.getCurrentPlayer();
+      game.changeBoard(cell.id);
     }
   };
   const resetButton = document.querySelector(".start-button");
   resetButton.addEventListener("click", game.resetGame);
+  const clearBoard = () => {
+    cells.forEach((element) => {
+      element.textContent = "";
+    });
+  };
   return {
-    cells,
+    clearBoard,
   };
 })();
 
-//switch back to old version, update reset button, just use game over
-//figure out why activegame won't update in the game object
-//player name input, button to start, restart the game, and a display element to declare winner
+//add a display element to declare winner
