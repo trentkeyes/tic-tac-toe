@@ -20,9 +20,14 @@ const Player = (name, marker) => {
     const nameInput2 = document.querySelector(".playerInput2");
     nameInput2.addEventListener("keypress", nameInputEvent);
   }
+  let winCount = 0;
+  const addWin = () => winCount++;
+  const getWinCount = () => winCount;
   return {
     getName,
     getMarker,
+    addWin,
+    getWinCount,
   };
 };
 
@@ -84,10 +89,11 @@ const game = (() => {
           board[4] === board[6] &&
           board[2] !== null)
       ) {
-        console.log(`${currentPlayer.getName()} is the winner!`);
+        display.declareEnd(currentPlayer.getName());
+        currentPlayer.addWin();
         gameOver = true;
       } else if (turnCount >= 8) {
-        console.log("tie game");
+        display.declareEnd("tie");
         gameOver = true;
       }
       turnCount++;
@@ -99,7 +105,7 @@ const game = (() => {
     display.clearBoard();
     turnCount = 0;
     currentPlayer = player1;
-    console.log("reset");
+    display.declareEnd("clear");
   };
   return {
     getGameOver,
@@ -130,8 +136,19 @@ const display = (() => {
       element.textContent = "";
     });
   };
+  const endGame = document.querySelector(".endGame");
+  const declareEnd = (winOrTie) => {
+    if (winOrTie === "clear") {
+      endGame.textContent = "";
+    } else if (winOrTie === "tie") {
+      endGame.textContent = "It's a tie! Start a new game.";
+    } else {
+      endGame.textContent = `${winOrTie} won the game!`;
+    }
+  };
   return {
     clearBoard,
+    declareEnd,
   };
 })();
 
