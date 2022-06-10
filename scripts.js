@@ -112,6 +112,7 @@ const game = (() => {
 const display = (() => {
   const cells = Array.from(document.querySelectorAll(".tttCell"));
   for (let i = 0; i < cells.length; i++) {
+    cells[i].textContent = "";
     cells[i].addEventListener("click", (event) => {
       addChoice(cells[i]);
     });
