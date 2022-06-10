@@ -151,6 +151,3 @@ const display = (() => {
     declareEnd,
   };
 })();
-
-//add a display element to declare winner
-//reset player after game end
