@@ -36,8 +36,6 @@ const game = (() => {
       board[index] = currentPlayer.getMarker();
       playTurn();
       switchPlayer();
-      console.log(currentPlayer.getName());
-      console.log(board);
     }
   };
   let currentPlayer = player1;
@@ -48,15 +46,11 @@ const game = (() => {
   };
   const getCurrentPlayer = () => currentPlayer.getMarker();
   let turnCount = 0;
-  let gameOver = true;
+  let gameOver = false;
   const getGameOver = () => gameOver;
-  let winner;
   const playTurn = function () {
     if (gameOver === false) {
-      if (turnCount >= 8) {
-        console.log("tie game");
-        gameOver = true;
-      } else if (
+      if (
         (board[0] === board[1] &&
           board[0] === board[2] &&
           board[1] === board[2] &&
@@ -91,7 +85,9 @@ const game = (() => {
           board[2] !== null)
       ) {
         console.log(`${currentPlayer.getName()} is the winner!`);
-        winner = currentPlayer.getName();
+        gameOver = true;
+      } else if (turnCount >= 8) {
+        console.log("tie game");
         gameOver = true;
       }
       turnCount++;
@@ -101,6 +97,8 @@ const game = (() => {
     gameOver = false;
     board = [null, null, null, null, null, null, null, null, null];
     display.clearBoard();
+    turnCount = 0;
+    currentPlayer = player1;
     console.log("reset");
   };
   return {
@@ -115,12 +113,11 @@ const display = (() => {
   const cells = Array.from(document.querySelectorAll(".tttCell"));
   for (let i = 0; i < cells.length; i++) {
     cells[i].addEventListener("click", (event) => {
-      cells[i].id = i;
       addChoice(cells[i]);
     });
   }
   const addChoice = (cell) => {
-    if (game.getGameOver() === false) {
+    if (game.getGameOver() === false && cell.textContent === "") {
       cell.textContent = game.getCurrentPlayer();
       game.changeBoard(cell.id);
     }
@@ -138,3 +135,4 @@ const display = (() => {
 })();
 
 //add a display element to declare winner
+//reset player after game end
